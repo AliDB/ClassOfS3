@@ -7,14 +7,10 @@ In this tutorial we try to develop an S3 class to estimate the relevant paramete
 #### 1. Develop a default method, **oneway.default**, for the generic function **oneway**.
 
 ``` r
-oneway <- function(z, ...) UseMethod("oneway")  ## UseMethod oneway???? what is the usage of output function?
+oneway <- function(z, ...) UseMethod("oneway")  
 
   oneway.default <- function(z, ...) {
-
-     # oneway <- function(z) {
-      # Put your R code here.
-    
-    if (!is.data.frame(z)) {  
+      if (!is.data.frame(z)) {  
        df <- data.frame(matrix(unlist(z), nrow=length(unlist(z)), byrow=T));df
       ##first one
        
@@ -32,17 +28,12 @@ oneway <- function(z, ...) UseMethod("oneway")  ## UseMethod oneway???? what is 
       }
       f
       unlist(f)
-      
-      
        df2 <- data.frame(matrix(unlist(f), nrow=length(unlist(f)), byrow=T));df2
       ### Second one
       
       print(df)
-      
-      
       z <- cbind(df,df2)
-     
-    }
+      }
       
     ###################  
     
@@ -51,9 +42,6 @@ oneway <- function(z, ...) UseMethod("oneway")  ## UseMethod oneway???? what is 
       
       if (l == 0)   {lev <- levels(z[, 2]) ; n=2;m=1 } else {lev <- levels(z[, 1]); n=1;m=2}
        lev ;n;m; # This line will find which column of the input z is assigend for the labels. as a consequence the other column contains the data.
-      
-      
-      
       varOfGroups=0 
        meanOfGroups=0
       remove(quant)
@@ -63,12 +51,7 @@ oneway <- function(z, ...) UseMethod("oneway")  ## UseMethod oneway???? what is 
         meanOfGroups[i] <- mean(z[which(z[,n]== lev[i]),m]) # this line will find the mean for the each group ; # More detials of the line is in the following line
         # which(z[,2]== lev[i] this part of code will select the groups that have the same lable as lev[i]  then by assinging the number of those rows to this code z[which(z[,2]== lev[i]),1] the code will select those rows but from the other column which has the data. Finally by apllying mean the mean of different groups will be found.
       l[i] <- length(which(z[,n]== lev[i])); #print("inja"); print(l)
-      
-      
-      
       quant <-  c(quant, quantile(c(z[which(z[,2]== lev[i]),1])));quant
-      
-      
       }
        print(quant)
       meanOfGroups ; 
@@ -80,35 +63,20 @@ oneway <- function(z, ...) UseMethod("oneway")  ## UseMethod oneway???? what is 
       
       for(i in 1:length(lev))
       { S_BG[i] <- length(which(z[,n] == lev[i])) *(meanOfGroups[i] - meanOfMeans)^2}
-      
       LSM <- sum(meanOfGroups)/length(lev) # least squares mean
-      
-      
       SS_BG = sum(S_BG) ; SS_BG  #Sum of Squered Between Group
-      
-      
       df_BG <- (length(lev)-1) ;df_BG #Degree of Freedon Between Group
-      
-      
-      ## meanOfSS_BG <- (SST_BG / df_BG); meanOfSS_BG; # Mean of SS Between Groups
-      
-      
+      # meanOfSS_BG <- (SST_BG / df_BG); meanOfSS_BG; # Mean of SS Between Groups
       S_WG=0; # Squar within Groups
-      
       for (i in 1:length(lev)) {
         S_WG[i] <- sum((z[which(z[,n]== lev[i]),m]-meanOfGroups[i])^2);
       }
-      
       SS_WG <- sum(S_WG) ; SS_WG # Sum of Squeared within Groups
-      
-      
       df_WG <- length(z[,n]) - length(lev); df_WG   # Degree of Freedom in between N-K
-      
       ## meanOfSS_WG <- SS_WG/df_WG ; meanOfSS_WG
       ## F_test <- meanOfSS_BG / meanOfSS_WG ;F_test
       ## oneway <- list(SS_BG,SS_WG,meanOfSS_BG, df_BG,df_WG, meanOfSS_WG ,F_test); return(oneway);
       l <- matrix(l,nrow=2, byrow=T); print(l)
-      
       oneway <- list(df_BG,df_WG,SS_BG,SS_WG,LSM,l); oneway; print("oneway");print(oneway)
     # print(l)
       # return(oneway) 
@@ -129,7 +97,6 @@ oneway <- function(z, ...) UseMethod("oneway")  ## UseMethod oneway???? what is 
   }
 
   oneway.table <- function(x) {
-  
   #Since the first Question didn't talk about the F test and some other values in ANOVA table, I assume that those values should be calculated in this part.   #If this assumpton is not true then the comment lines that have ## should be uncommented in the first question.
   
   x <- unlist(x); x; print("x");print(x)
@@ -181,8 +148,6 @@ oneway <- function(z, ...) UseMethod("oneway")  ## UseMethod oneway???? what is 
   }
 
   
-  
-  # Put your R code here.
   ## can check with 
 z <- list(A=c(62, 60, 63, 59), B=c( 63 ,67 ,71, 64, 65, 66 ), C=c(68, 66, 71, 67, 68, 68),D=c(56 ,62,60, 61, 63, 64, 63, 59))
   oneway.default(z)
