@@ -521,69 +521,7 @@ lsmeans.oneway <- function(object, ...) {
     ## [1] "meanofgroups222"
     ## [1] 61 68 66 61
     ## [1] "result"
-    ##      [,1]   [,2] [,3] [,4]
-    ## [1,]   NA 3.8034   NA   NA
-    ## [2,]   NA     NA   NA   NA
-    ## [3,]   NA     NA   NA   NA
-    ## [4,]   NA     NA   NA   NA
-    ## [1] "a"
-    ## [1] 7
-    ## LSD between group =" 1 " and group =" 2 " is " 3.8034 "Significant difference is found on Mean difference between Group 1 & Group 2 by knowing that  the difference between their mean is 7 
-    ## [1] "result"
-    ##      [,1]   [,2]   [,3] [,4]
-    ## [1,]   NA 3.8034 3.8034   NA
-    ## [2,]   NA     NA     NA   NA
-    ## [3,]   NA     NA     NA   NA
-    ## [4,]   NA     NA     NA   NA
-    ## [1] "a"
-    ## [1] 5
-    ## LSD between group =" 1 " and group =" 3 " is " 3.8034 "Significant difference is found on Mean difference between Group 1 & Group 3 by knowing that  the difference between their mean is 5 
-    ## [1] "result"
-    ##      [,1]   [,2]   [,3]     [,4]
-    ## [1,]   NA 3.8034 3.8034 3.608222
-    ## [2,]   NA     NA     NA       NA
-    ## [3,]   NA     NA     NA       NA
-    ## [4,]   NA     NA     NA       NA
-    ## [1] "a"
-    ## [1] 0
-    ## LSD between group =" 1 " and group =" 4 " is " 3.608222 "No Significance is found on Mean difference between Group 1 & Group 4 by knowing that  the difference between their mean is 0 
-    ## [1] "result"
-    ##      [,1]   [,2]     [,3]     [,4]
-    ## [1,]   NA 3.8034 3.803400 3.608222
-    ## [2,]   NA     NA 3.401865       NA
-    ## [3,]   NA     NA       NA       NA
-    ## [4,]   NA     NA       NA       NA
-    ## [1] "a"
-    ## [1] 2
-    ## LSD between group =" 2 " and group =" 3 " is " 3.401865 "No Significance is found on Mean difference between Group 2 & Group 3 by knowing that  the difference between their mean is 2 
-    ## [1] "result"
-    ##      [,1]   [,2]     [,3]     [,4]
-    ## [1,]   NA 3.8034 3.803400 3.608222
-    ## [2,]   NA     NA 3.401865 3.182153
-    ## [3,]   NA     NA       NA       NA
-    ## [4,]   NA     NA       NA       NA
-    ## [1] "a"
-    ## [1] 7
-    ## LSD between group =" 2 " and group =" 4 " is " 3.182153 "Significant difference is found on Mean difference between Group 2 & Group 4 by knowing that  the difference between their mean is 7 
-    ## [1] "result"
-    ##      [,1]   [,2]     [,3]     [,4]
-    ## [1,]   NA 3.8034 3.803400 3.608222
-    ## [2,]   NA     NA 3.401865 3.182153
-    ## [3,]   NA     NA       NA 3.182153
-    ## [4,]   NA     NA       NA       NA
-    ## [1] "a"
-    ## [1] 5
-    ## LSD between group =" 3 " and group =" 4 " is " 3.182153 "Significant difference is found on Mean difference between Group 3 & Group 4 by knowing that  the difference between their mean is 5 
-    ##      [,1] [,2] [,3] [,4]
-    ## [1,]   NA    0    0    1
-    ## [2,]   NA   NA    1    0
-    ## [3,]   NA   NA   NA    0
-    ## [4,]   NA   NA   NA   NA
-    ##      [,1]   [,2]     [,3]     [,4]
-    ## [1,]   NA 3.8034 3.803400 3.608222
-    ## [2,]   NA     NA 3.401865 3.182153
-    ## [3,]   NA     NA       NA 3.182153
-    ## [4,]   NA     NA       NA       NA
+
 
 The argument is a *oneway* object, which should include the least-squares means as a component. Fisher's LSD should be computed and formatted nicely.
 
