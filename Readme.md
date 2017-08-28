@@ -1,20 +1,12 @@
----
-output:
-  rmarkdown: github_document
-  html_document: default
-  pdf_document: default
----
 
-### Assignment 4: One-Way S3 Implementation
+# One-Way S3 Implementation
 
-#### Explain your code where appropriate.
 
-You should turn in this .Rmd file as well as the corresponding .html file. I should be able to execute the .Rmd file. You may want to develop the code using a separate .R file. You may want to add arguments to some of the functions below, e.g., alpha = 0.05 for testing.
+In this tutorial we try to develop an S3 class to estimate the relevant parameters in a one-way AOV with possibly unequal sample sizes (e.g., see Dowdy and Wearden, Statistics for Research, Wiley). This code is part of my project for Statistical Computing with Prof. Harner.
 
-Develop an S3 class to estimate the relevant parameters in a one-way AOV with possibly unequal sample sizes (e.g., see Dowdy and Wearden, Statistics for Research, Wiley). You can use some of the code from Assignment 2.
+#### 1. Develop a default method, **oneway.default**, for the generic function **oneway**.
 
-#### 1. Develop a default method, **oneway.default**,  for the  generic function **oneway**.
-```{r oneway.default}
+``` r
 oneway <- function(z, ...) UseMethod("oneway")  ## UseMethod oneway???? what is the usage of output function?
 
   oneway.default <- function(z, ...) {
@@ -194,12 +186,114 @@ oneway <- function(z, ...) UseMethod("oneway")  ## UseMethod oneway???? what is 
   ## can check with 
 z <- list(A=c(62, 60, 63, 59), B=c( 63 ,67 ,71, 64, 65, 66 ), C=c(68, 66, 71, 67, 68, 68),D=c(56 ,62,60, 61, 63, 64, 63, 59))
   oneway.default(z)
- 
 ```
+
+    ## Warning in remove(f): object 'f' not found
+
+    ##    matrix.unlist.z...nrow...length.unlist.z....byrow...T.
+    ## 1                                                      62
+    ## 2                                                      60
+    ## 3                                                      63
+    ## 4                                                      59
+    ## 5                                                      63
+    ## 6                                                      67
+    ## 7                                                      71
+    ## 8                                                      64
+    ## 9                                                      65
+    ## 10                                                     66
+    ## 11                                                     68
+    ## 12                                                     66
+    ## 13                                                     71
+    ## 14                                                     67
+    ## 15                                                     68
+    ## 16                                                     68
+    ## 17                                                     56
+    ## 18                                                     62
+    ## 19                                                     60
+    ## 20                                                     61
+    ## 21                                                     63
+    ## 22                                                     64
+    ## 23                                                     63
+    ## 24                                                     59
+    ##    0%   25%   50%   75%  100%    0%   25%   50%   75%  100%    0%   25% 
+    ## 59.00 59.75 61.00 62.25 63.00 63.00 64.25 65.50 66.75 71.00 66.00 67.25 
+    ##   50%   75%  100%    0%   25%   50%   75%  100% 
+    ## 68.00 68.00 71.00 56.00 59.75 61.50 63.00 64.00 
+    ##      [,1] [,2]
+    ## [1,]    4    6
+    ## [2,]    6    8
+    ## [1] "oneway"
+    ## [[1]]
+    ## [1] 3
+    ## 
+    ## [[2]]
+    ## [1] 20
+    ## 
+    ## [[3]]
+    ## [1] 228
+    ## 
+    ## [[4]]
+    ## [1] 112
+    ## 
+    ## [[5]]
+    ## [1] 64
+    ## 
+    ## [[6]]
+    ##      [,1] [,2]
+    ## [1,]    4    6
+    ## [2,]    6    8
+    ## 
+    ## [1] "x"
+    ## [1]   3  20 228 112  64   4   6   6   8
+    ## [1] "l_2"
+    ## [1] 9
+    ## [1] 6 7 8 9
+    ## [1] "NOb"
+    ## [1] 4 6 6 8
+    ##      [,1] [,2]
+    ## [1,]    4    6
+    ## [2,]    6    8
+    ## [1] "cbind"
+    ##              [,1] [,2] [,3]
+    ## [1,] 4.658471e-05    4    6
+    ## [2,] 4.658471e-05    6    8
+    ##           Df Sum Sq Mean sq  F value       Pr(>F) LSM
+    ## diet       3    228    76.0 13.57143 4.658471e-05  64
+    ## Residuals 20    112     5.6 13.57143 4.658471e-05  64
+    ## [1] "table"
+    ##                                        LSM    
+    ## [1,]  3 228 76.0 13.57143 4.658471e-05  64 4 6
+    ## [2,] 20 112  5.6 13.57143 4.658471e-05  64 6 8
+    ##                                        LSM    
+    ## [1,]  3 228 76.0 13.57143 4.658471e-05  64 4 6
+    ## [2,] 20 112  5.6 13.57143 4.658471e-05  64 6 8
+    ## [1] "meanOfGRoups_itself"
+    ## [1] 61 66 68 61
+    ## [1] "table_meanofgroups"
+    ##      [,1] [,2]
+    ## [1,]   61   66
+    ## [2,]   68   61
+    ## [1] "cbind_oneway_meanofGroups"
+    ## [1] "final"
+    ##                                        LSM                               
+    ## [1,]  3 228 76.0 13.57143 4.658471e-05  64 4 6 61 66 59.00 61.00 63 64.25
+    ## [2,] 20 112  5.6 13.57143 4.658471e-05  64 6 8 68 61 59.75 62.25 63 65.50
+    ##                                
+    ## [1,] 66.75 66.00 68 71 59.75 63
+    ## [2,] 71.00 67.25 68 56 61.50 64
+
+    ##                                        LSM                               
+    ## [1,]  3 228 76.0 13.57143 4.658471e-05  64 4 6 61 66 59.00 61.00 63 64.25
+    ## [2,] 20 112  5.6 13.57143 4.658471e-05  64 6 8 68 61 59.75 62.25 63 65.50
+    ##                                
+    ## [1,] 66.75 66.00 68 71 59.75 63
+    ## [2,] 71.00 67.25 68 56 61.50 64
+
 The *z* argument for **oneway.default** should be a list of (possibly) named components, one for each sample. The computations for the one-way ANOVA should be done in **oneway.default**.
 
 #### 2. This method uses the more standard input of a factor representing groups (or samples) and a numeric response.
-```{r oneway.factor}
+
+``` r
 oneway.factor <- function(z, y, ...) {
 ## Your code here
   
@@ -220,10 +314,12 @@ return(o)
   #values = c( 62, 60, 63, 59,63 ,67 ,71, 64, 65, 66 ,68, 66, 71, 67, 68, 68 ,56 ,62,60, 61, 63, 64, 63, 59)
   #oneway.factor(factor,,values)
 ```
+
 The *z* argument should be the factor with levels representing samples. The factor should be used to deconstruct *y*, the response, into a list as in the default.
 
 #### 3. The model formula is the standard for R models, but do not use **model.matrix** to implement **oneway**.
-```{r oneway.formula}
+
+``` r
 oneway.formula <- function(formula, data=list(), ...) {
 ## Your code here
   out <- model.frame(formula,data) 
@@ -237,12 +333,13 @@ oneway.formula <- function(formula, data=list(), ...) {
   z <- list( factor= c(rep("A",4),rep("B",2)) , factor2= c(rep("F",4)) , values = c( 63 ,67 ,71, 64, 65, 66), values2 =c(23,45,67) ) 
   
  #oneway.formula(factor ~ values , z)
-
 ```
-You might want to extract the factor term and the response from the **model.frame** and then call **oneway.factor**, which in turn calls **oneway.default**.  ###???? shall I use oneway.factor insides oneway.default?
+
+You might want to extract the factor term and the response from the **model.frame** and then call **oneway.factor**, which in turn calls **oneway.default**. \#\#\#???? shall I use oneway.factor insides oneway.default?
 
 #### 4. The default **print** method should be short and provide essential information.
-```{r print.oneway}
+
+``` r
 print.oneway <- function(x, ...) {
 ## Your code here
   o <- x
@@ -259,7 +356,8 @@ print.oneway <- function(x, ...) {
 ```
 
 #### 5. The summary method should create a summary object---not print directly.
-```{r summary.oneway}
+
+``` r
 summary.oneway <- function(object, ...) {
 ## Your code here
    # o <- oneway.default(object)
@@ -275,10 +373,12 @@ summary.oneway <- function(object, ...) {
   z <- list(A=c(62, 60, 63, 59), B=c( 63 ,67 ,71, 64, 65, 66 ), C=c(68, 66, 71, 67, 68, 68),D=c(56 ,62,60, 61, 63, 64, 63, 59))
  #  summary.oneway(oneway.default(z))   
 ```
+
 The argument is a **oneway** object. The summary object should include a component representing an AOV table, e.g., see Dowdy and Wearden. You might want to decide whether objects of class *summary.oneway* inherit from the class *oneway*.
 
 #### 6. The print method for the summary object should provide more detailed information about the summary object.
-```{r print.summary.oneway}
+
+``` r
 print.summary.oneway <- function(x, ...) {
 ## Your code here
 
@@ -293,12 +393,13 @@ print.summary.oneway <- function(x, ...) {
   #z <- list(A=c(62, 60, 63, 59), B=c( 63 ,67 ,71, 64, 65, 66 ), C=c(68, 66, 71, 67, 68, 68),D=c(56 ,62,60, 61, 63, 64, 63, 59))
  #print.summary.oneway(oneway.default(z))  
    ## I add LSM to the AOV table. It could be printed seperately too but i prefered this format.
-  
 ```
-The  AOV table should be formatted nicely. The least squares means should also be formated and printed.
+
+The AOV table should be formatted nicely. The least squares means should also be formated and printed.
 
 #### 7. Implement Fisher's LSD multiple comparison procedure for your oneway.
-```{r lsmeans.oneway}
+
+``` r
 lsmeans.oneway <- function(object, ...) {
 ## Your code here
    o <- unlist(object)
@@ -347,13 +448,183 @@ lsmeans.oneway <- function(object, ...) {
    #to check it 
     z <- list(A=c(62, 60, 63, 59), B=c( 63 ,67 ,71, 64, 65, 66 ), C=c(68, 66, 71, 67, 68, 68),D=c(56 ,62,60, 61, 63, 64, 63, 59))
   lsmeans.oneway(oneway.default(z))
-  
-  
 ```
+
+    ## Warning in remove(f): object 'f' not found
+
+    ##    matrix.unlist.z...nrow...length.unlist.z....byrow...T.
+    ## 1                                                      62
+    ## 2                                                      60
+    ## 3                                                      63
+    ## 4                                                      59
+    ## 5                                                      63
+    ## 6                                                      67
+    ## 7                                                      71
+    ## 8                                                      64
+    ## 9                                                      65
+    ## 10                                                     66
+    ## 11                                                     68
+    ## 12                                                     66
+    ## 13                                                     71
+    ## 14                                                     67
+    ## 15                                                     68
+    ## 16                                                     68
+    ## 17                                                     56
+    ## 18                                                     62
+    ## 19                                                     60
+    ## 20                                                     61
+    ## 21                                                     63
+    ## 22                                                     64
+    ## 23                                                     63
+    ## 24                                                     59
+    ##    0%   25%   50%   75%  100%    0%   25%   50%   75%  100%    0%   25% 
+    ## 59.00 59.75 61.00 62.25 63.00 63.00 64.25 65.50 66.75 71.00 66.00 67.25 
+    ##   50%   75%  100%    0%   25%   50%   75%  100% 
+    ## 68.00 68.00 71.00 56.00 59.75 61.50 63.00 64.00 
+    ##      [,1] [,2]
+    ## [1,]    4    6
+    ## [2,]    6    8
+    ## [1] "oneway"
+    ## [[1]]
+    ## [1] 3
+    ## 
+    ## [[2]]
+    ## [1] 20
+    ## 
+    ## [[3]]
+    ## [1] 228
+    ## 
+    ## [[4]]
+    ## [1] 112
+    ## 
+    ## [[5]]
+    ## [1] 64
+    ## 
+    ## [[6]]
+    ##      [,1] [,2]
+    ## [1,]    4    6
+    ## [2,]    6    8
+    ## 
+    ## [1] "x"
+    ## [1]   3  20 228 112  64   4   6   6   8
+    ## [1] "l_2"
+    ## [1] 9
+    ## [1] 6 7 8 9
+    ## [1] "NOb"
+    ## [1] 4 6 6 8
+    ##      [,1] [,2]
+    ## [1,]    4    6
+    ## [2,]    6    8
+    ## [1] "cbind"
+    ##              [,1] [,2] [,3]
+    ## [1,] 4.658471e-05    4    6
+    ## [2,] 4.658471e-05    6    8
+    ##           Df Sum Sq Mean sq  F value       Pr(>F) LSM
+    ## diet       3    228    76.0 13.57143 4.658471e-05  64
+    ## Residuals 20    112     5.6 13.57143 4.658471e-05  64
+    ## [1] "table"
+    ##                                        LSM    
+    ## [1,]  3 228 76.0 13.57143 4.658471e-05  64 4 6
+    ## [2,] 20 112  5.6 13.57143 4.658471e-05  64 6 8
+    ##                                        LSM    
+    ## [1,]  3 228 76.0 13.57143 4.658471e-05  64 4 6
+    ## [2,] 20 112  5.6 13.57143 4.658471e-05  64 6 8
+    ## [1] "meanOfGRoups_itself"
+    ## [1] 61 66 68 61
+    ## [1] "table_meanofgroups"
+    ##      [,1] [,2]
+    ## [1,]   61   66
+    ## [2,]   68   61
+    ## [1] "cbind_oneway_meanofGroups"
+    ## [1] "final"
+    ##                                        LSM                               
+    ## [1,]  3 228 76.0 13.57143 4.658471e-05  64 4 6 61 66 59.00 61.00 63 64.25
+    ## [2,] 20 112  5.6 13.57143 4.658471e-05  64 6 8 68 61 59.75 62.25 63 65.50
+    ##                                
+    ## [1,] 66.75 66.00 68 71 59.75 63
+    ## [2,] 71.00 67.25 68 56 61.50 64
+    ## [1] 20
+    ## [1] 5.6
+    ## [1] 4 6 6 8
+    ## [1] "o"
+    ##                                        LSM                               
+    ## [1,]  3 228 76.0 13.57143 4.658471e-05  64 4 6 61 66 59.00 61.00 63 64.25
+    ## [2,] 20 112  5.6 13.57143 4.658471e-05  64 6 8 68 61 59.75 62.25 63 65.50
+    ##                                
+    ## [1,] 66.75 66.00 68 71 59.75 63
+    ## [2,] 71.00 67.25 68 56 61.50 64
+    ## [1] "meanofgroups222"
+    ## [1] 61 68 66 61
+    ## [1] "result"
+    ##      [,1]   [,2] [,3] [,4]
+    ## [1,]   NA 3.8034   NA   NA
+    ## [2,]   NA     NA   NA   NA
+    ## [3,]   NA     NA   NA   NA
+    ## [4,]   NA     NA   NA   NA
+    ## [1] "a"
+    ## [1] 7
+    ## LSD between group =" 1 " and group =" 2 " is " 3.8034 "Significant difference is found on Mean difference between Group 1 & Group 2 by knowing that  the difference between their mean is 7 
+    ## [1] "result"
+    ##      [,1]   [,2]   [,3] [,4]
+    ## [1,]   NA 3.8034 3.8034   NA
+    ## [2,]   NA     NA     NA   NA
+    ## [3,]   NA     NA     NA   NA
+    ## [4,]   NA     NA     NA   NA
+    ## [1] "a"
+    ## [1] 5
+    ## LSD between group =" 1 " and group =" 3 " is " 3.8034 "Significant difference is found on Mean difference between Group 1 & Group 3 by knowing that  the difference between their mean is 5 
+    ## [1] "result"
+    ##      [,1]   [,2]   [,3]     [,4]
+    ## [1,]   NA 3.8034 3.8034 3.608222
+    ## [2,]   NA     NA     NA       NA
+    ## [3,]   NA     NA     NA       NA
+    ## [4,]   NA     NA     NA       NA
+    ## [1] "a"
+    ## [1] 0
+    ## LSD between group =" 1 " and group =" 4 " is " 3.608222 "No Significance is found on Mean difference between Group 1 & Group 4 by knowing that  the difference between their mean is 0 
+    ## [1] "result"
+    ##      [,1]   [,2]     [,3]     [,4]
+    ## [1,]   NA 3.8034 3.803400 3.608222
+    ## [2,]   NA     NA 3.401865       NA
+    ## [3,]   NA     NA       NA       NA
+    ## [4,]   NA     NA       NA       NA
+    ## [1] "a"
+    ## [1] 2
+    ## LSD between group =" 2 " and group =" 3 " is " 3.401865 "No Significance is found on Mean difference between Group 2 & Group 3 by knowing that  the difference between their mean is 2 
+    ## [1] "result"
+    ##      [,1]   [,2]     [,3]     [,4]
+    ## [1,]   NA 3.8034 3.803400 3.608222
+    ## [2,]   NA     NA 3.401865 3.182153
+    ## [3,]   NA     NA       NA       NA
+    ## [4,]   NA     NA       NA       NA
+    ## [1] "a"
+    ## [1] 7
+    ## LSD between group =" 2 " and group =" 4 " is " 3.182153 "Significant difference is found on Mean difference between Group 2 & Group 4 by knowing that  the difference between their mean is 7 
+    ## [1] "result"
+    ##      [,1]   [,2]     [,3]     [,4]
+    ## [1,]   NA 3.8034 3.803400 3.608222
+    ## [2,]   NA     NA 3.401865 3.182153
+    ## [3,]   NA     NA       NA 3.182153
+    ## [4,]   NA     NA       NA       NA
+    ## [1] "a"
+    ## [1] 5
+    ## LSD between group =" 3 " and group =" 4 " is " 3.182153 "Significant difference is found on Mean difference between Group 3 & Group 4 by knowing that  the difference between their mean is 5 
+    ##      [,1] [,2] [,3] [,4]
+    ## [1,]   NA    0    0    1
+    ## [2,]   NA   NA    1    0
+    ## [3,]   NA   NA   NA    0
+    ## [4,]   NA   NA   NA   NA
+    ##      [,1]   [,2]     [,3]     [,4]
+    ## [1,]   NA 3.8034 3.803400 3.608222
+    ## [2,]   NA     NA 3.401865 3.182153
+    ## [3,]   NA     NA       NA 3.182153
+    ## [4,]   NA     NA       NA       NA
+
 The argument is a *oneway* object, which should include the least-squares means as a component. Fisher's LSD should be computed and formatted nicely.
 
 #### 8. A plot generic function should be implemented for *oneway* objects.
-```{r plot.oneway}
+
+``` r
 plot.oneway <- function(x, ...) {
   ## Your code here
 #   o <- unlist(x); print("ooooo");print(o)
@@ -388,14 +659,27 @@ plot.oneway <- function(x, ...) {
 }
   plot.oneway(oneway.default(z))
 ```
+
+    ## NULL
+
 The plot should compare the distributions of the groups in a side-by-side manner.
 
 #### 9. Your S3 class implementation should be illustrated with the *coagulation* data set. The data consists of blood coagulation times for 24 animals randomly assigned to four different diets.
-```{r example}
+
+``` r
 library(faraway)
 data(coagulation)
 coagulation[1:4,]
+```
+
+    ##   coag diet
+    ## 1   62    A
+    ## 2   60    A
+    ## 3   63    A
+    ## 4   59    A
+
+``` r
 ## Your implementation code here
 ```
-You should provide brief explanations of the output along with the output, which implies that you may want multiple chucks of R code interspersed with markdown.
 
+You should provide brief explanations of the output along with the output, which implies that you may want multiple chucks of R code interspersed with markdown.
